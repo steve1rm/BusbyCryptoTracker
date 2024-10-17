@@ -7,7 +7,7 @@ plugins {
 
 
 android {
-    namespace = "com.plcoding.cryptotracker"
+    namespace = "me.androidbox.busbycryptotracker"
     compileSdk = 35
 
     defaultConfig {
