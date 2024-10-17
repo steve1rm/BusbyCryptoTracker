@@ -11,7 +11,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.plcoding.cryptotracker"
+        applicationId = "com.androidbox.cryptotracker"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
@@ -34,11 +34,11 @@ android {
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "21"
     }
     buildFeatures {
         buildConfig = true
@@ -52,6 +52,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.core)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 

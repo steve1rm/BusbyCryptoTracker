@@ -1,4 +1,4 @@
-package com.plcoding.cryptotracker.ui.theme
+package me.androidbox.core.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
