@@ -1,3 +1,5 @@
+import com.android.build.api.variant.BuildConfigField
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -25,11 +27,26 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            this.isMinifyEnabled = true
+            this.isDebuggable = false
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", "BASE_URL", "\"http://api.coincap.io/v2/\"")
+        }
+
+        debug {
+            this.isMinifyEnabled = false
+            this.isDebuggable = true
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
         }
     }
     compileOptions {
