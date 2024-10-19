@@ -2,6 +2,7 @@
 
 package me.androidbox.crypto.presentation.coin_list.components
 
+import androidx.collection.intLongMapOf
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.androidbox.core.R
 import me.androidbox.core.presentation.ui.theme.BusbyCryptoTrackerTheme
+import me.androidbox.core.presentation.util.getDrawableIdForCoin
 import me.androidbox.crypto.domain.Coin
 import me.androidbox.crypto.presentation.models.CoinUi
 import me.androidbox.crypto.presentation.models.toCoinUi
@@ -54,7 +56,7 @@ fun CoinListItem(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Icon(
-            imageVector = ImageVector.vectorResource(R.drawable.btc),
+            imageVector = ImageVector.vectorResource(id = getDrawableIdForCoin(coinUi.symbol)),
             contentDescription = coinUi.name,
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(84.dp)

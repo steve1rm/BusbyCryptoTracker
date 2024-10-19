@@ -1,5 +1,3 @@
-import com.android.build.api.variant.BuildConfigField
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -70,6 +68,7 @@ android {
 
 dependencies {
     implementation(projects.core)
+    implementation(projects.crypto)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

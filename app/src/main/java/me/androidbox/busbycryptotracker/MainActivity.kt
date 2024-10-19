@@ -9,9 +9,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import me.androidbox.core.presentation.ui.theme.BusbyCryptoTrackerTheme
+import me.androidbox.crypto.presentation.coin_list.CoinListScreen
+import me.androidbox.crypto.presentation.coin_list.CoinListViewModel
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,28 +26,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             BusbyCryptoTrackerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                    val coinListViewModel = koinViewModel<CoinListViewModel>()
+                    val coinListState by coinListViewModel.coinListStateFlow.collectAsStateWithLifecycle()
+
+                    CoinListScreen(
+                        coinListState = coinListState
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BusbyCryptoTrackerTheme {
-        Greeting("Android")
     }
 }
