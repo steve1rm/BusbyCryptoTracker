@@ -2,7 +2,6 @@
 
 package me.androidbox.crypto.presentation.coin_list.components
 
-import androidx.collection.intLongMapOf
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -29,7 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.androidbox.core.R
 import me.androidbox.core.presentation.ui.theme.BusbyCryptoTrackerTheme
 import me.androidbox.core.presentation.util.getDrawableIdForCoin
 import me.androidbox.crypto.domain.Coin

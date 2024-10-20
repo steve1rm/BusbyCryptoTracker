@@ -1,6 +1,7 @@
 package me.androidbox.busbycryptotracker
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,7 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.flow.catch
 import me.androidbox.core.presentation.ui.theme.BusbyCryptoTrackerTheme
+import me.androidbox.core.presentation.util.ObserveAsEvents
+import me.androidbox.core.presentation.util.toString
+import me.androidbox.crypto.presentation.coin_list.CoinListEvent
 import me.androidbox.crypto.presentation.coin_list.CoinListScreen
 import me.androidbox.crypto.presentation.coin_list.CoinListViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -22,12 +27,25 @@ import org.koin.androidx.compose.koinViewModel
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+     //   enableEdgeToEdge()
         setContent {
             BusbyCryptoTrackerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val coinListViewModel = koinViewModel<CoinListViewModel>()
                     val coinListState by coinListViewModel.coinListStateFlow.collectAsStateWithLifecycle()
+                    val coinListEvent = coinListViewModel.eventChannel
+
+                    ObserveAsEvents(coinListEvent) { coinEvent ->
+                        when(coinEvent) {
+                            is CoinListEvent.OnErrorEvent -> {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    coinEvent.errorMessage.toString(this@MainActivity),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                    }
 
                     CoinListScreen(
                         coinListState = coinListState

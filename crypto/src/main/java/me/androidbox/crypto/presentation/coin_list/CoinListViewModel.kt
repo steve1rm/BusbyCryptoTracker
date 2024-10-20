@@ -2,10 +2,12 @@ package me.androidbox.crypto.presentation.coin_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -18,6 +20,9 @@ import me.androidbox.crypto.presentation.models.toCoinUi
 class CoinListViewModel(
     private val coinRemoteDataSource: CoinRemoteDataSource
 ) : ViewModel() {
+
+    private val _eventChannel = Channel<CoinListEvent>()
+    val eventChannel = _eventChannel.receiveAsFlow()
 
     private val _coinlistStateFlow = MutableStateFlow(CoinListState())
     val coinListStateFlow = _coinlistStateFlow.asStateFlow()
@@ -62,6 +67,7 @@ class CoinListViewModel(
                         coinListState.copy(
                             isLoading = false)
                     }
+                    _eventChannel.send(CoinListEvent.OnErrorEvent(networkError))
                 }
         }
     }
