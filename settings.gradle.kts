@@ -19,6 +19,10 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CryptoTracker"
+// We can do like this `implementation(projects.core)`
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "BusbyCryptoTracker"
 include(":app")
- 
+include(":crypto")
+include(":core")

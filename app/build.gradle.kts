@@ -7,11 +7,11 @@ plugins {
 
 
 android {
-    namespace = "com.plcoding.cryptotracker"
+    namespace = "me.androidbox.busbycryptotracker"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.plcoding.cryptotracker"
+        applicationId = "me.androidbox.busbycryptotracker"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
@@ -25,20 +25,35 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            this.isMinifyEnabled = true
+            this.isDebuggable = false
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", "BASE_URL", "\"http://api.coincap.io/v2/\"")
+        }
+
+        debug {
+            this.isMinifyEnabled = false
+            this.isDebuggable = true
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
         }
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "21"
     }
     buildFeatures {
         buildConfig = true
@@ -52,6 +67,9 @@ android {
 }
 
 dependencies {
+    implementation(projects.core)
+    implementation(projects.crypto)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
