@@ -19,12 +19,14 @@ import me.androidbox.core.presentation.ui.theme.BusbyCryptoTrackerTheme
 import me.androidbox.crypto.presentation.CoinListState
 import me.androidbox.crypto.presentation.coin_list.components.CoinListItem
 import me.androidbox.crypto.presentation.coin_list.components.previewCoin
+import me.androidbox.crypto.presentation.models.CoinUi
 import me.androidbox.crypto.presentation.models.toCoinUi
 
 @Composable
 fun CoinListScreen(
     coinListState: CoinListState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCoinClicked: (coin: CoinUi) -> Unit
 ) {
 
     if(coinListState.isLoading) {
@@ -52,6 +54,7 @@ fun CoinListScreen(
                     coinUi = coinUi,
                     onCoinClicked = { coinId ->
                         println(coinId)
+                        onCoinClicked(coinUi)
                     }
                 )
                 HorizontalDivider()
@@ -72,6 +75,7 @@ private fun PreviewCoinListScreen() {
                 }
             ),
             modifier = Modifier.background(color = MaterialTheme.colorScheme.background),
+            onCoinClicked = {}
         )
     }
 }

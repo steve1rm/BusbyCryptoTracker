@@ -4,21 +4,17 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.flow.catch
 import me.androidbox.core.presentation.ui.theme.BusbyCryptoTrackerTheme
 import me.androidbox.core.presentation.util.ObserveAsEvents
 import me.androidbox.core.presentation.util.toString
+import me.androidbox.crypto.presentation.coin_detail.CoinDetailScreen
+import me.androidbox.crypto.presentation.coin_list.CoinListAction
 import me.androidbox.crypto.presentation.coin_list.CoinListEvent
 import me.androidbox.crypto.presentation.coin_list.CoinListScreen
 import me.androidbox.crypto.presentation.coin_list.CoinListViewModel
@@ -47,9 +43,20 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    CoinListScreen(
-                        coinListState = coinListState
-                    )
+                    if(coinListState.selectedCoin != null) {
+                        CoinDetailScreen(
+                            coinListState = coinListState,
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    }
+                    else {
+                        CoinListScreen(
+                            coinListState = coinListState,
+                            onCoinClicked = { coinUi ->
+                                coinListViewModel.onAction(CoinListAction.OnClickedCoin(coinUi))
+                            }
+                        )
+                    }
                 }
             }
         }

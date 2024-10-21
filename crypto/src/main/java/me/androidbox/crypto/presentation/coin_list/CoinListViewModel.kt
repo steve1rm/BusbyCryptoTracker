@@ -39,6 +39,11 @@ class CoinListViewModel(
         when(coinListAction) {
             is CoinListAction.OnClickedCoin -> {
                 /** Navigate to detail screen */
+                _coinlistStateFlow.update { coinListState ->
+                    coinListState.copy(
+                        selectedCoin =coinListAction.coinUi
+                    )
+                }
             }
         }
     }
